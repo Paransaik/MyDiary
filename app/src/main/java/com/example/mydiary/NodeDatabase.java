@@ -42,7 +42,7 @@ public class NodeDatabase {
         this.context = context;
     }
 
-    /**
+    /**d
      * 인스턴스 가져오기
      */
     public static NodeDatabase getInstance(Context context) {

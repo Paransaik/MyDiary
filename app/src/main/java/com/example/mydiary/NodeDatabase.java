@@ -10,15 +10,16 @@ import static java.sql.DriverManager.println;
 
 //메모 데이터베이스
 public class NodeDatabase {
-    private static final String TAG = "NoteDatabase";
+    //DB 상태 출력을 위한 TAG
+    private static final String TAG = "NodeDatabase";
 
-    //싱글톤 인스턴스
+    //싱글톤 패턴 인스턴스 사용
     private static NodeDatabase database;
     //DB NAME
     public static String DATABASE_NAME = "Node.db";
     //DB TABLE NAME
-    public static String TABLE_NOTE = "NOTE";
-    //version
+    public static String TABLE_NOTE = "NODE";
+    //DB version
     public static int DATABASE_VERSION = 1;
 
 
@@ -42,7 +43,7 @@ public class NodeDatabase {
         this.context = context;
     }
 
-    /**d
+    /**
      * 인스턴스 가져오기
      */
     public static NodeDatabase getInstance(Context context) {
@@ -138,19 +139,16 @@ public class NodeDatabase {
                 Log.e(TAG, "Exception in CREATE_SQL", ex);
             }
 
-            // create index
-            String CREATE_INDEX_SQL = "create index " + TABLE_NOTE + "_IDX ON " + TABLE_NOTE + "(" + "CREATE_DATE" + ")";
-            try {
-                db.execSQL(CREATE_INDEX_SQL);
-            } catch(Exception ex) {
-                Log.e(TAG, "Exception in CREATE_INDEX_SQL", ex);
-            }
+//            // create index
+//            String CREATE_INDEX_SQL = "create index " + TABLE_NOTE + "_IDX ON " + TABLE_NOTE + "(" + "CREATE_DATE" + ")";
+//            try {
+//                db.execSQL(CREATE_INDEX_SQL);
+//            } catch(Exception ex) {
+//                Log.e(TAG, "Exception in CREATE_INDEX_SQL", ex);
+//            }
         }
 
-        public void onOpen(SQLiteDatabase db) {
-            println("opened database [" + DATABASE_NAME + "].");
-        }
-
+        @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             println("Upgrading database from version " + oldVersion + " to " + newVersion + ".");
         }

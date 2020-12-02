@@ -20,8 +20,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     Fragment1 fragment1;
     Fragment2 fragment2;
 
+    //bottomNavigation 생성
     BottomNavigationView bottomNavigation;
 
+    //db instance 생성
     public static NodeDatabase Database = null;
 
     @Override
@@ -54,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             }
         });
 
-        //데이터베이스 열기
+        //DB 열기
         openDatabase();
     }
 
-    //DB 만들기
+    //DB가 없으면 만들기
     public void openDatabase() {
         //open database
         if (Database != null) {

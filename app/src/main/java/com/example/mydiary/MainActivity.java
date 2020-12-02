@@ -1,7 +1,6 @@
 package com.example.mydiary;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 * url: https://github.com/Paransaik
 * date: `20.11.28.~xx.
  */
-public class MainActivity extends AppCompatActivity implements OnTabItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
     Fragment1 fragment1;
     Fragment2 fragment2;
 
@@ -55,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
             }
         });
 
-        AutoPermissions.Companion.loadAllPermissions(this, 101);
-
         //데이터베이스 열기
         openDatabase();
     }
@@ -71,11 +68,23 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
 
         //DB instance 가져오기
         Database = NodeDatabase.getInstance(this);
-        boolean isOpen = Database.open();
-        if (isOpen) {
-            Log.d(TAG, "Note database is open.");
-        } else {
-            Log.d(TAG, "Note database is not open.");
+    }
+
+    //OnItemSelectedListener onTabSelected 매소드 오버라이드
+    public void onTabSelected(int position) {
+        if (position == 0) {
+            bottomNavigation.setSelectedItemId(R.id.tab1);
+        } else if (position == 1) {
+            fragment2 = new Fragment2();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2).commit();
         }
+    }
+
+    //OnItemSelectedListener showFragment2 매소드 오버라이드
+    public void showFragment2(Node item) {
+        fragment2 = new Fragment2();
+        fragment2.setItem(item);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2).commit();
     }
 }

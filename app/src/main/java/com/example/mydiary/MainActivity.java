@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnSelectedListene
 
         //DB instance 가져오기
         Database = NodeDatabase.getInstance(this);
-        boolean isOpen = Database.open();
+        Database.open();
     }
 
     //Fragment1.OnSelectedListener onTabSelected 매소드 오버라이드

@@ -53,7 +53,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
         return items.get(position);
     }
 
-    public void setOnItemClickListener(OnNodeClickListener listener) {
+    public void setOnNodeClickListener(OnNodeClickListener listener) {
         this.listener = listener;
     }
 

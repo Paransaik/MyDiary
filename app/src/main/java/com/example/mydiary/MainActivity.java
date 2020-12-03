@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 * url: https://github.com/Paransaik
 * date: `20.11.28.~xx.
  */
-public class MainActivity extends AppCompatActivity implements Fragment1.OnSelectedListener {
+public class MainActivity extends AppCompatActivity implements OnSelectedListener {
     Fragment1 fragment1;
     Fragment2 fragment2;
 
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements Fragment1.OnSelec
 
         //DB instance 가져오기
         Database = NodeDatabase.getInstance(this);
+        boolean isOpen = Database.open();
     }
 
     //Fragment1.OnSelectedListener onTabSelected 매소드 오버라이드

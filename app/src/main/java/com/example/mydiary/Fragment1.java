@@ -28,7 +28,7 @@ public class Fragment1 extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_1, container, false);
         //초기화면 구성
         initUI(rootView);
-        //
+        //데이터로딩
         loadNoteListData();
         return rootView;
     }
@@ -53,14 +53,9 @@ public class Fragment1 extends Fragment {
         }
     }
 
-    public interface OnSelectedListener {
-        void onTabSelected(int position);
-        void showFragment2(Node item);
-    }
-
     private void initUI(ViewGroup rootView) {
-        Button todayWriteButton = rootView.findViewById(R.id.newButton);
-        todayWriteButton.setOnClickListener(new View.OnClickListener() {
+        Button newButton = rootView.findViewById(R.id.newButton);
+        newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -76,11 +71,10 @@ public class Fragment1 extends Fragment {
 
         adapter = new NodeAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new OnNodeClickListener() {
+        adapter.setOnNodeClickListener(new OnNodeClickListener() {
             @Override
             public void onItemClick(NodeAdapter.ViewHolder holder, View view, int position) {
                 Node item = adapter.getItem(position);
-                //Log.d(TAG, "아이템 선택됨 : " + item.get_id());
                 if (listener != null) {
                     listener.showFragment2(item);
                 }
@@ -95,7 +89,7 @@ public class Fragment1 extends Fragment {
         NodeDatabase database = NodeDatabase.getInstance(context);
         if (database != null) {
             Cursor outCursor = database.rawQuery(sql);
-
+            Format.println("record count : " + recordCount + "\n");
             recordCount = outCursor.getCount();
 
             ArrayList<Node> items = new ArrayList<Node>();

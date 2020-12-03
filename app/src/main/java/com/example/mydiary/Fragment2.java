@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class Fragment2 extends Fragment {
     Context context;
-    Fragment1.OnSelectedListener listener;
+    OnSelectedListener listener;
     OnRequestListener requestListener;
 
     //Node구성에 필요한 dateTextView, titleInput, contentsInput 선언
@@ -34,6 +34,11 @@ public class Fragment2 extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_2, container, false);
         //초기화면 구성
         initUI(rootView);
+
+        if (requestListener != null) {
+            requestListener.onRequest("getCurrentLocation");
+        }
+
         //Node(Item)을 적용시킴
         applyItem();
         return rootView;
@@ -44,8 +49,8 @@ public class Fragment2 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        if (context instanceof Fragment1.OnSelectedListener) {
-            listener = (Fragment1.OnSelectedListener) context;
+        if (context instanceof OnSelectedListener) {
+            listener = (OnSelectedListener) context;
         }
         
         //새로운 Node 작성 시 기존에 작성한 Node 유무 검사

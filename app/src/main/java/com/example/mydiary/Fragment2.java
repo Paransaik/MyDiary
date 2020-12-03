@@ -2,7 +2,6 @@ package com.example.mydiary;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import java.util.Date;
 
 public class Fragment2 extends Fragment {
     Context context;
-    OnItemSelectedListener listener;
+    Fragment1.OnSelectedListener listener;
     OnRequestListener requestListener;
 
     //Node구성에 필요한 dateTextView, titleInput, contentsInput 선언
@@ -45,8 +44,8 @@ public class Fragment2 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        if (context instanceof OnItemSelectedListener) {
-            listener = (OnItemSelectedListener) context;
+        if (context instanceof Fragment1.OnSelectedListener) {
+            listener = (Fragment1.OnSelectedListener) context;
         }
         
         //새로운 Node 작성 시 기존에 작성한 Node 유무 검사
@@ -178,7 +177,7 @@ public class Fragment2 extends Fragment {
         String contents = contentsInput.getText().toString();
 
         //inset node query
-        String sql = "insert into " + NodeDatabase.TABLE_NOTE +
+        String sql = "insert into " + NodeDatabase.TABLE_NODE +
                 "(TITLE, CONTENTS) values(" +
                 "'"+ title + "', " +
                 "'"+ contents + "')";
@@ -196,7 +195,7 @@ public class Fragment2 extends Fragment {
             String contents = contentsInput.getText().toString();
 
             //update node query
-            String sql = "update " + NodeDatabase.TABLE_NOTE +
+            String sql = "update " + NodeDatabase.TABLE_NODE +
                     " set " +
                     " ITLE = '" + title + "'" +
                     " ,CONTENTS = '" + contents + "'" +
@@ -214,9 +213,9 @@ public class Fragment2 extends Fragment {
     private void deleteNode() {
         if (item != null) {
             //delete node query
-            String sql = "delete from " + NodeDatabase.TABLE_NOTE +
+            String sql = "delete from " + NodeDatabase.TABLE_NODE +
                     " where " +
-                    "   _id = " + item._id;
+                    " _id = " + item._id;
 
             //현재 database instance에 적용
             NodeDatabase database = NodeDatabase.getInstance(context);

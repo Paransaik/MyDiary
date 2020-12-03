@@ -18,7 +18,7 @@ public class NodeDatabase {
     //DB NAME
     public static String DATABASE_NAME = "Node.db";
     //DB TABLE NAME
-    public static String TABLE_NOTE = "NODE";
+    public static String TABLE_NODE = "NODE";
     //DB version
     public static int DATABASE_VERSION = 1;
 
@@ -115,10 +115,10 @@ public class NodeDatabase {
             println("creating database [" + DATABASE_NAME + "].");
 
             // TABLE_NOTE
-            println("creating table [" + TABLE_NOTE + "].");
+            println("creating table [" + TABLE_NODE + "].");
 
             // drop existing table
-            String DROP_SQL = "drop table if exists " + TABLE_NOTE;
+            String DROP_SQL = "drop table if exists " + TABLE_NODE;
             try {
                 db.execSQL(DROP_SQL);
             } catch(Exception ex) {
@@ -126,7 +126,7 @@ public class NodeDatabase {
             }
 
             // create table
-            String CREATE_SQL = "create table " + TABLE_NOTE + "("
+            String CREATE_SQL = "create table " + TABLE_NODE + "("
                     + "  _id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
                     + "  TITLE TEXT DEFAULT '', "
                     + "  CONTENTS TEXT DEFAULT '', "
@@ -138,14 +138,6 @@ public class NodeDatabase {
             } catch(Exception ex) {
                 Log.e(TAG, "Exception in CREATE_SQL", ex);
             }
-
-//            // create index
-//            String CREATE_INDEX_SQL = "create index " + TABLE_NOTE + "_IDX ON " + TABLE_NOTE + "(" + "CREATE_DATE" + ")";
-//            try {
-//                db.execSQL(CREATE_INDEX_SQL);
-//            } catch(Exception ex) {
-//                Log.e(TAG, "Exception in CREATE_INDEX_SQL", ex);
-//            }
         }
 
         @Override

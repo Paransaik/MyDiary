@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> implements OnNoteItemClickListener {
+public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> implements OnNodeClickListener {
     ArrayList<Node> items = new ArrayList<Node>();
-    OnNoteItemClickListener listener;
+    OnNodeClickListener listener;
 
     static int position = 0;
 
@@ -53,7 +53,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
         return items.get(position);
     }
 
-    public void setOnItemClickListener(OnNoteItemClickListener listener) {
+    public void setOnItemClickListener(OnNodeClickListener listener) {
         this.listener = listener;
     }
 
@@ -65,14 +65,14 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout layout1;
+        LinearLayout container;
         TextView contentsTextView;
         TextView dateTextView;
 
-        public ViewHolder(View itemView, final OnNoteItemClickListener listener, int layoutType) {
+        public ViewHolder(View itemView, final OnNodeClickListener listener, int layoutType) {
             super(itemView);
-            layout1 = itemView.findViewById(R.id.layout1);
-            layout1.setVisibility(View.VISIBLE);
+            container = itemView.findViewById(R.id.container);
+            container.setVisibility(View.VISIBLE);
             contentsTextView = itemView.findViewById(R.id.contentsTextView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
 
@@ -94,5 +94,4 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
         }
 
     }
-
 }

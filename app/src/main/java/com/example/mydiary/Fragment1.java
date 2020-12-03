@@ -20,7 +20,7 @@ public class Fragment1 extends Fragment {
     NodeAdapter adapter;
 
     Context context;
-    OnRequestListener listener;
+    OnSelectedListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class Fragment1 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        if (context instanceof OnRequestListener) {
-            listener = (OnRequestListener) context;
+        if (context instanceof OnSelectedListener) {
+            listener = (OnSelectedListener) context;
         }
     }
 
@@ -53,12 +53,13 @@ public class Fragment1 extends Fragment {
         }
     }
 
-    public interface OnRequestListener {
-        public void onRequest(String command);
+    public interface OnSelectedListener {
+        void onTabSelected(int position);
+        void showFragment2(Node item);
     }
 
     private void initUI(ViewGroup rootView) {
-        Button todayWriteButton = rootView.findViewById(R.id.todayWriteButton);
+        Button todayWriteButton = rootView.findViewById(R.id.newButton);
         todayWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,10 +76,10 @@ public class Fragment1 extends Fragment {
 
         adapter = new NodeAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new OnNoteItemClickListener() {
+        adapter.setOnItemClickListener(new OnNodeClickListener() {
             @Override
             public void onItemClick(NodeAdapter.ViewHolder holder, View view, int position) {
-                Note item = adapter.getItem(position);
+                Node item = adapter.getItem(position);
                 //Log.d(TAG, "아이템 선택됨 : " + item.get_id());
                 if (listener != null) {
                     listener.showFragment2(item);
@@ -88,7 +89,7 @@ public class Fragment1 extends Fragment {
     }
 
     public int loadNoteListData() {
-        String sql = "select _id, TITLE, CONTENTS, CREATE_DATE, MODIFY_DATE from " + NodeDatabase.TABLE_NOTE + " order by CREATE_DATE desc";
+        String sql = "select _id, TITLE, CONTENTS, CREATE_DATE, MODIFY_DATE from " + NodeDatabase.TABLE_NODE + " order by CREATE_DATE desc";
 
         int recordCount = -1;
         NodeDatabase database = NodeDatabase.getInstance(context);

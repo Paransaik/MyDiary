@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 * url: https://github.com/Paransaik
 * date: `20.11.28.~xx.
  */
-public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements Fragment1.OnSelectedListener {
     Fragment1 fragment1;
     Fragment2 fragment2;
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         Database = NodeDatabase.getInstance(this);
     }
 
-    //OnItemSelectedListener onTabSelected 매소드 오버라이드
+    //Fragment1.OnSelectedListener onTabSelected 매소드 오버라이드
     public void onTabSelected(int position) {
         if (position == 0) {
             bottomNavigation.setSelectedItemId(R.id.tab1);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         }
     }
 
-    //OnItemSelectedListener showFragment2 매소드 오버라이드
+    //Fragment1.OnSelectedListener showFragment2 매소드 오버라이드
     public void showFragment2(Node item) {
         fragment2 = new Fragment2();
         fragment2.setItem(item);

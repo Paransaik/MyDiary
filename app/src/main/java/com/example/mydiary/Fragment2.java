@@ -202,7 +202,7 @@ public class Fragment2 extends Fragment {
             //update node query
             String sql = "update " + NodeDatabase.TABLE_NODE +
                     " set " +
-                    " ITLE = '" + title + "'" +
+                    " TITLE = '" + title + "'" +
                     " ,CONTENTS = '" + contents + "'" +
                     " where " +
                     " _id = " + item._id;

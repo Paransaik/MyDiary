@@ -9,27 +9,35 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="horizontal"
-
-        android:layout_weight="1"
         android:visibility="visible">
 
-        <TextView
-            android:id="@+id/contentsTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="내용"
-            android:textSize="24sp" />
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:text="02월 10일"
-            android:textColor="#FF0000FF"
-            android:textSize="16sp" />
-        </LinearLayout>
+            <TextView
+                android:id="@+id/contentsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="내용"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="right"
+                android:text="0월 0일"
+                android:textColor="#FF0000FF"
+                android:textSize="16sp" />
+            </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

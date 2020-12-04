@@ -7,7 +7,7 @@
         android:id="@+id/tab1"
         app:showAsAction="ifRoom"
         android:title="@string/tab_title1"
-        android:enabled="true"
+
         android:icon="@drawable/list"/>
     <item
         android:id="@+id/tab2"

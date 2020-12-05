@@ -15,38 +15,26 @@ public class NodeDatabase {
 
     //싱글톤 패턴 인스턴스 사용
     private static NodeDatabase database;
-    //DB NAME
+    //DB name
     public static String DATABASE_NAME = "Node.db";
-    //DB TABLE NAME
+    //DB table name
     public static String TABLE_NODE = "NODE";
     //DB version
     public static int DATABASE_VERSION = 1;
-
-
-    /**
-     * Helper class defined
-     */
+    //DB 사용에 필요한 Helper
     private DatabaseHelper dbHelper;
-
-    /**
-     * SQLiteDatabase 인스턴스
-     */
+    //DB instance
     private SQLiteDatabase db;
-
-    /**
-     * 컨텍스트 객체
-     */
+    //DB object
     private Context context;
-
-    //생성자
+    //DB constructor
     private NodeDatabase(Context context) {
         this.context = context;
     }
 
-    /**
-     * 인스턴스 가져오기
-     */
+    //DB get Instance
     public static NodeDatabase getInstance(Context context) {
+        //DB 가 null이면 새로운 DB를 만듦
         if (database == null) {
             database = new NodeDatabase(context);
         }
@@ -56,7 +44,9 @@ public class NodeDatabase {
     //DB open
     public boolean open() {
         println("opening database [" + DATABASE_NAME + "].");
+        //dnHelper object 생성
         dbHelper = new DatabaseHelper(context);
+        //getWritableDatabase() 함수를 통해 SQLiteDatabase object을 가져와야 함
         db = dbHelper.getWritableDatabase();
         return true;
     }
@@ -64,60 +54,51 @@ public class NodeDatabase {
     //DB close
     public void close() {
         println("closing database [" + DATABASE_NAME + "].");
+        //현재 연결 중인 DB를 닫음
         db.close();
         database = null;
     }
 
-    /**
-     * execute raw query using the input SQL
-     * close the cursor after fetching any result
-     *
-     * @param SQL
-     * @return
-     */
-    public Cursor rawQuery(String SQL) {
+     //DB select 쿼리문 실행
+     public Cursor rawQuery(String SQL) {
         println("\nexecuteQuery called.\n");
 
         Cursor c1 = null;
         try {
+            //select 쿼리문을 실행할 sql을 parameter로 받고 c1변수에 저장함
             c1 = db.rawQuery(SQL, null);
             println("cursor count : " + c1.getCount());
         } catch(Exception ex) {
+            //오루 발생 시
             Log.e(TAG, "Exception in executeQuery", ex);
         }
-
         return c1;
     }
 
+    //select가 아닌 나머지 쿼리문 수행
     public boolean execSQL(String SQL) {
         println("\nexecute called.\n");
-
         try {
             Log.d(TAG, "SQL : " + SQL);
+            //sql 쿼리문을 받고 실행시킴
             db.execSQL(SQL);
         } catch(Exception ex) {
+            //오류 발생 시
             Log.e(TAG, "Exception in executeQuery", ex);
             return false;
         }
-
         return true;
     }
 
-    /**
-     * Database Helper inner class
-     */
+    //DB를 관리하는데 필요한 DatabaseHelper 사용
     private class DatabaseHelper extends SQLiteOpenHelper {
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
+        //DB table을 생성함
         public void onCreate(SQLiteDatabase db) {
-            println("creating database [" + DATABASE_NAME + "].");
-
-            // TABLE_NOTE
-            println("creating table [" + TABLE_NODE + "].");
-
-            // drop existing table
+            //이미 테이이 잇을 경우 drop 함
             String DROP_SQL = "drop table if exists " + TABLE_NODE;
             try {
                 db.execSQL(DROP_SQL);
@@ -125,7 +106,7 @@ public class NodeDatabase {
                 Log.e(TAG, "Exception in DROP_SQL", ex);
             }
 
-            // create table
+            //create table
             String CREATE_SQL = "create table " + TABLE_NODE + "("
                     + "  _id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
                     + "  TITLE TEXT DEFAULT '', "
@@ -134,6 +115,7 @@ public class NodeDatabase {
                     + "  MODIFY_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP "
                     + ")";
             try {
+                //쿼리문 실행
                 db.execSQL(CREATE_SQL);
             } catch(Exception ex) {
                 Log.e(TAG, "Exception in CREATE_SQL", ex);
@@ -141,6 +123,7 @@ public class NodeDatabase {
         }
 
         @Override
+        //기존 사용자가 DB를 사용하고 있어서 업그레이드 할 경우, 오버라이드
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             println("Upgrading database from version " + oldVersion + " to " + newVersion + ".");
         }

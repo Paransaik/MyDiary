@@ -1,11 +1,13 @@
 package com.example.mydiary;
 
 public class Node {
+    //Node 구성하는 id, title, contents, createDateStr
     int _id;
     String title;
     String contents;
     String createDateStr;
 
+    //Node 구성하는 id, title, contents, createDateStr
     public Node(int _id, String title, String contents, String createDateStr) {
         this._id = _id;
         this.title = title;
@@ -13,6 +15,7 @@ public class Node {
         this.createDateStr = createDateStr;
     }
 
+    //각 필드의 접근자, 생성자 선언
     public int get_id() {
         return _id;
     }

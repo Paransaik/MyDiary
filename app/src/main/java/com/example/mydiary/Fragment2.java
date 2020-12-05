@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import java.util.Date;
 
 public class Fragment2 extends Fragment {
+    //이벤트 발생 시 instance, listener 선언
     Context context;
     OnSelectedListener listener;
     OnRequestListener requestListener;
@@ -26,19 +27,16 @@ public class Fragment2 extends Fragment {
     //저장 버튼을 누를 때 상태를 나타내는 플레그 값
     int mMode = Format.MODE_INSERT;
 
+    //item 선언
     Node item;
 
     @Override
+    //Fragement 사용
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //activiti_main의 container에 Fragment를 부착시킴
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_2, container, false);
         //초기화면 구성
         initUI(rootView);
-
-        if (requestListener != null) {
-            requestListener.onRequest("getCurrentLocation");
-        }
-
         //Node(Item)을 적용시킴
         applyItem();
         return rootView;
@@ -49,12 +47,14 @@ public class Fragment2 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+        //context가 OnSelectedListener 속하는지 검사함
         if (context instanceof OnSelectedListener) {
+            //속할 경우 context값을 listener에 넣음
             listener = (OnSelectedListener) context;
         }
-        
-        //새로운 Node 작성 시 기존에 작성한 Node 유무 검사
+        //context가 OnRequestListener 속하는지 검사함
         if (context instanceof OnRequestListener) {
+            //속할 경우 context값을 listener에 넣음
             requestListener = (OnRequestListener) context;
         }
     }
@@ -64,17 +64,20 @@ public class Fragment2 extends Fragment {
     public void onDetach() {
         super.onDetach();
         if (context != null) {
+            //context, listener 초기화
             context = null;
             listener = null;
         }
     }
 
+    //OnRequestListener interface
     public interface OnRequestListener {
-        public void onRequest(String command);
+        void onRequest(String command);
     }
 
     //저장, 삭제, 닫기 버튼 구현
     private void initUI(ViewGroup rootView) {
+        //NEW 버튼으로 새로운 Node를 구현할 때 필요한 날짜, 제목, 내용 선언
         dateTextView = rootView.findViewById(R.id.dateTextView);
         titleInput = rootView.findViewById(R.id.titleInput);
         contentsInput = rootView.findViewById(R.id.contentsInput);
@@ -94,7 +97,7 @@ public class Fragment2 extends Fragment {
                     //node 수정
                     modifyNode();
                 }
-
+                //listener가 null이 아니면 onTabSelected 호출
                 if (listener != null) {
                     listener.onTabSelected(0);
                 }
@@ -109,6 +112,7 @@ public class Fragment2 extends Fragment {
             public void onClick(View v) {
                 //deleteNode() 호출
                 deleteNode();
+                //listener가 null이 아니면 onTabSelected 호출
                 if (listener != null) {
                     listener.onTabSelected(0);
                 }
@@ -121,6 +125,7 @@ public class Fragment2 extends Fragment {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //listener가 null이 아니면 onTabSelected 호출
                 if (listener != null) {
                     listener.onTabSelected(0);
                 }
@@ -180,7 +185,6 @@ public class Fragment2 extends Fragment {
         //title, contents 선언과 초기화
         String title = titleInput.getText().toString();
         String contents = contentsInput.getText().toString();
-
         //inset node query
         String sql = "insert into " + NodeDatabase.TABLE_NODE +
                 "(TITLE, CONTENTS) values(" +
@@ -189,16 +193,16 @@ public class Fragment2 extends Fragment {
 
         //현재 database instance에 적용
         NodeDatabase database = NodeDatabase.getInstance(context);
-        //db 종료
+        //DB 종료
         database.execSQL(sql);
     }
 
     //DB 레코드 수정
     private void modifyNode() {
         if (item != null) {
+            //title, contents 선언과 초기화
             String title = titleInput.getText().toString();
             String contents = contentsInput.getText().toString();
-
             //update node query
             String sql = "update " + NodeDatabase.TABLE_NODE +
                     " set " +
@@ -209,7 +213,7 @@ public class Fragment2 extends Fragment {
 
             //현재 database instance에 적용
             NodeDatabase database = NodeDatabase.getInstance(context);
-            //db 종료
+            //DB 종료
             database.execSQL(sql);
         }
     }
@@ -224,7 +228,7 @@ public class Fragment2 extends Fragment {
 
             //현재 database instance에 적용
             NodeDatabase database = NodeDatabase.getInstance(context);
-            //db 종료
+            //DB 종료
             database.execSQL(sql);
         }
     }

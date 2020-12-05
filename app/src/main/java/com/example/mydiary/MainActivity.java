@@ -37,8 +37,10 @@ public class MainActivity extends AppCompatActivity implements OnSelectedListene
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment1).commit();
 
-        //아래 네비게이션 버튼 연결
+
+        //아래 Navigation button
         bottomNavigation = findViewById(R.id.bottom_navigation);
+        //아래 Navigation button을 누를 때, 원하는 Fragment로 화면이 출력되는 listener
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
